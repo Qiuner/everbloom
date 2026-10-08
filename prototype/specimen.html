@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PhotoCraft 标本</title>
+<meta name="description" content="永生花标本 No.001：PhotoCraft，一个 Photoshop 风格的开源 Rust 图像编辑器。作者声明、核验所见、成熟度与发布包体积。">
+<script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=JetBrains+Mono:wght@400&family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/everbloom.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/></filter>
+</svg>
+
+<header class="site-header wrap">
+  <a class="brand" href="index.html">
+    <span class="seal">永生花</span>
+    <span class="brand-word">EVERBLOOM</span>
+  </a>
+  <nav class="site-nav">
+    <a href="index.html#herbarium">标本册</a>
+    <a href="index.html#method">方法</a>
+    <a href="index.html#invite">采集</a>
+    <button class="theme-toggle" type="button">跟随系统</button>
+  </nav>
+</header>
+
+<main>
+
+<div class="wrap">
+  <p class="crumb"><a href="index.html#herbarium">标本册</a> / No. 001 / PhotoCraft</p>
+
+  <!-- ============ 台纸 ============ -->
+  <div class="plate-wrap">
+    <div class="sheet-wrap" style="view-transition-name: sheet-001">
+      <div class="sheet plate" data-seed="plate-photocraft">
+        <svg class="flora" id="plateFlower" viewBox="0 0 200 260" role="img" aria-label="压制的虞美人"></svg>
+
+        <div class="plate-side">
+          <div class="plate-title">
+            <div class="no">SPECIMEN No. 001</div>
+            <h1>PhotoCraft</h1>
+            <p class="species">虞美人 <i>Papaver rhoeas</i> — 层叠如图层。<br>一个 Photoshop 风格的图像编辑器，以纯 Rust 重新写出。</p>
+          </div>
+
+          <div class="herb-label">
+            <span class="stamp partial">部分核实<small>partial</small></span>
+            <div class="head">Herbarium Everbloom</div>
+            <dl>
+              <dt>项目</dt><dd>storytold/photocraft</dd>
+              <dt>版本</dt><dd>v0.3.0</dd>
+              <dt>对应原作</dt><dd class="zh">Photoshop（风格对应）</dd>
+              <dt>实现</dt><dd>Rust · egui · Cargo workspace</dd>
+              <dt>许可</dt><dd>MIT / Apache-2.0</dd>
+              <dt>AI 参与</dt><dd class="zh">未知</dd>
+              <dt>核查日期</dt><dd>2026-10-07 · Pacific/Honolulu</dd>
+              <dt>依据</dt><dd class="zh">文档核对 · 未运行</dd>
+            </dl>
+          </div>
+        </div>
+
+        <div class="plate-foot">
+          <span>采集地 github.com/storytold/photocraft</span>
+          <span>压制于 2026-10-07 · 文档核对 · 移动指针可用放大镜细看</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 判断 ============ -->
+<section class="wrap narrow">
+  <p class="eyebrow">Verdict · 判断</p>
+  <p class="verdict"><span class="q">“</span>现有材料支持「开源重实现项目」的描述；不能据此推断原软件源码被破解或泄露，也不能认定与 Photoshop 完全等价。<span class="q">”</span></p>
+</section>
+
+<!-- ============ 两种墨 ============ -->
+<section class="wrap narrow" style="padding-top:0">
+  <p class="eyebrow">Two inks · 声明与所见</p>
+  <h2>铅笔与墨水</h2>
+  <div class="inks">
+    <div class="ink-col ink-claim">
+      <h3>作者声明 · pencil</h3>
+      <ul>
+        <li>基于公开规格与可观察行为，用纯 Rust 独立实现。</li>
+        <li>支持图层、蒙版、调整层、PSD 读写。</li>
+        <li>可通过 CLI / MCP 控制。</li>
+        <li>early alpha，尚不能替代日常专业工作中的 Photoshop。</li>
+      </ul>
+    </div>
+    <div class="ink-col ink-seen">
+      <h3>核验所见 · ink</h3>
+      <ul>
+        <li>读取了 README、发布附件元数据、v0.3.0 Cargo.toml 与自评表。</li>
+        <li>Cargo 工作区含 PSD、文档、画笔、合成、GPU、自动化与 UI 模块。</li>
+        <li>许可证声明为 MIT / Apache-2.0。</li>
+        <li>自评表中仍有大量缺失项与无效设置（见下）。</li>
+      </ul>
+    </div>
+  </div>
+  <div class="tags">
+    <span>psd</span><span>document</span><span>brush</span><span>composite</span><span>gpu</span><span>automation</span><span>egui ui</span>
+  </div>
+</section>
+
+<!-- ============ 成熟度之花 ============ -->
+<section class="wrap narrow" style="padding-top:0">
+  <p class="eyebrow">Maturity · 成熟度之花</p>
+  <h2>一项一瓣，<br>一个设置一粒种子。</h2>
+  <div class="bloom-chart">
+    <svg id="scorecard" viewBox="0 0 400 400" role="img" aria-label="自评表：30 项工具中完成 3、部分完成 14、缺失 13；133 个设置中 60 个尚无效果。"></svg>
+    <ul class="legend-list">
+      <li data-kind="done"><span class="n done" data-to="3">3</span><span>瓣盛开<small>工具项 · 完成</small></span></li>
+      <li data-kind="partial"><span class="n partial" data-to="14">14</span><span>瓣半开<small>工具项 · 部分完成</small></span></li>
+      <li data-kind="missing"><span class="n missing" data-to="13">13</span><span>瓣只有轮廓<small>工具项 · 缺失</small></span></li>
+      <li data-kind="dead"><span class="n dead" data-to="60">60</span><span>粒种子未发芽<small>133 个设置中尚无效果</small></span></li>
+    </ul>
+  </div>
+  <p class="note">数据来自 v0.3.0 自评表（作者自评）。菜单接通不等于功能完整。</p>
+</section>
+
+<!-- ============ 体积 ============ -->
+<section class="wrap narrow" style="padding-top:0">
+  <p class="eyebrow">Weight · 发布包体积</p>
+  <h2>称一称它的重量</h2>
+  <p class="lede">以下是发布附件大小，不是安装后占用。保留字节数。</p>
+  <div class="bars" id="bars"></div>
+</section>
+
+<!-- ============ 未确定 ============ -->
+<section class="wrap narrow" style="padding-top:0">
+  <p class="eyebrow">Unknowns · 尚未看见</p>
+  <h2>没有看见的，也写下来</h2>
+  <ul class="unknowns">
+    <li>clean-room 过程未经独立审计。</li>
+    <li>未安装、编译或运行测试。</li>
+    <li>未定位最初传播的 X 原帖。</li>
+    <li>未核实 AI 生成代码的比例。</li>
+  </ul>
+
+  <p class="eyebrow" style="margin-top:56px">Evidence · 证据</p>
+  <ul class="evidence">
+    <li><a href="https://github.com/storytold/photocraft/releases/tag/v0.3.0" target="_blank" rel="noopener">→ v0.3.0 发布页</a></li>
+    <li><a href="https://github.com/storytold/photocraft/blob/v0.3.0/docs/scorecard.md" target="_blank" rel="noopener">→ 自评表 scorecard.md</a></li>
+    <li><a href="https://github.com/storytold/photocraft/blob/v0.3.0/Cargo.toml" target="_blank" rel="noopener">→ Cargo.toml</a></li>
+  </ul>
+</section>
+
+<section class="wrap narrow" style="padding-top:0">
+  <a class="next-link" data-cursor="去源头看看 ↗" href="https://github.com/storytold/filmcraft" target="_blank" rel="noopener">
+    <svg id="nextFlower" class="flora" viewBox="0 0 200 260" aria-hidden="true"></svg>
+    <span><small>下一株 · No. 002 · 待采集</small><span class="t">FilmCraft → 向日葵</span></span>
+  </a>
+</section>
+
+</main>
+
+<footer class="site-footer wrap">
+  <span>永生花 · Everbloom — 视觉原型 v0.2 · 2026-10-08</span>
+  <span>核查状态只表示检查范围，不为项目的真实性或安全性作担保</span>
+</footer>
+
+<script src="assets/everbloom.js"></script>
+<script>
+(function () {
+  const E = window.Everbloom;
+  E.drawPlant(document.getElementById('plateFlower'), 'poppy', { seed: 'PhotoCraft-plate', radius: 64, bloomY: 86, tapes: true });
+  E.deckle(document.querySelector('.plate'), 3, 8);
+
+  E.drawScorecard(document.getElementById('scorecard'), { done: 3, partial: 14, missing: 13, settings: 133, dead: 60 });
+
+  const packs = [
+    { name: 'Web ZIP', kind: '压缩包', bytes: 11119388 },
+    { name: 'Windows x64 MSI', kind: '安装包', bytes: 53895168 },
+    { name: 'Windows x64 便携 ZIP', kind: '压缩包', bytes: 65251740 }
+  ];
+  const max = Math.max(...packs.map(p => p.bytes));
+  document.getElementById('bars').innerHTML = packs.map(p => `
+    <div class="bar-row">
+      <div class="bar-meta">
+        <span>${p.name} <span class="kind">· ${p.kind}</span></span>
+        <span class="bytes" data-bytes="${p.bytes}">${p.bytes.toLocaleString('en-US')} B · ${(p.bytes / 1e6).toFixed(2)} MB</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(p.bytes / max * 100).toFixed(2)}%"></div></div>
+    </div>`).join('');
+
+  E.drawPlant(document.getElementById('nextFlower'), 'sunflower', { pressed: false, seed: 'FilmCraft', radius: 56 });
+})();
+</script>
+<script src="assets/motion.js"></script>
+</body>
+</html>
