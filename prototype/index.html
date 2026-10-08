@@ -2,39 +2,145 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>永生花 · Everbloom</title>
-<meta name="description" content="保存软件时代的切片，记录代码被重新理解的时刻。经典软件开源重实现的标本册。">
+<meta name="description" content="保存软件时代的切片，记录代码被重新理解的时刻。一片可以漫游的花田：每株经典软件的开源重实现，都种在原作诞生的那一年。">
 <script>if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=JetBrains+Mono:wght@400&family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/everbloom.css">
+<link rel="stylesheet" href="assets/field.css">
 </head>
-<body>
+<body class="field-page">
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/></filter>
 </svg>
 
-<header class="site-header wrap">
-  <a class="brand" href="index.html">
+<header class="site-header">
+  <a class="brand" href="index.html" aria-label="永生花：回到入口 / 走进花田">
     <span class="seal">永生花</span>
     <span class="brand-word">EVERBLOOM</span>
   </a>
   <nav class="site-nav">
-    <a href="#herbarium">标本册</a>
-    <a href="#method">方法</a>
-    <a href="#invite">采集</a>
+    <button class="navbtn" id="btnSearch" type="button">寻花<span class="kbd">/</span></button>
+    <button class="navbtn" id="btnNotebook" type="button">札记<span class="kbd">N</span></button>
+    <a href="read.html">图录</a>
     <button class="theme-toggle" type="button">跟随系统</button>
   </nav>
 </header>
 
-<main>
+<!-- ============ 花田 ============ -->
+<div class="field" id="field" tabindex="-1" role="application" aria-label="花田：横轴是时间。拖动漫游，滚轮穿越年份，Ctrl 加滚轮缩放，按斜杠寻花，按 N 打开札记。">
+  <div class="world" id="world"><svg id="worldSvg" aria-hidden="true"></svg></div>
+</div>
+<div class="era" id="era" aria-hidden="true"></div>
+<div class="drifts" id="drifts" aria-hidden="true"></div>
+<div class="labels" id="labels"></div>
 
-<!-- ============ 主视觉：旧窗口融化，代码落地，开出一朵花 ============ -->
-<section class="hero" aria-label="永生花">
+<div class="bottom-fade" aria-hidden="true"></div>
+<div class="yearnow" aria-live="polite"><small>你在</small><span id="yearNum">1995</span></div>
+<div class="ruler" id="ruler" role="slider" aria-label="年代尺：拖动穿越年份" aria-valuemin="1979" aria-valuemax="2037"><svg aria-hidden="true"></svg></div>
+<div class="zoomctl">
+  <button type="button" id="zOut" aria-label="缩小">−</button>
+  <button type="button" id="zHome" aria-label="全景">⌂</button>
+  <button type="button" id="zIn" aria-label="放大">+</button>
+</div>
+<div class="fhint" id="hint" role="status"></div>
+<div class="toast" id="toast" role="status"></div>
+
+<nav class="sr-only" aria-label="标本列表">
+  <ul>
+    <li><a href="specimen.html">PhotoCraft（已压制，部分核实）</a></li>
+    <li><a href="read.html#herbarium">全部标本与线索（图录）</a></li>
+  </ul>
+</nav>
+
+<!-- ============ 札记 ============ -->
+<div class="scrim" id="scrim"></div>
+<aside class="notebook" id="notebook" aria-hidden="true" aria-label="札记">
+  <div class="nb-head">
+    <h2>札记</h2>
+    <button class="nb-close" id="nbClose" type="button" aria-label="合上札记">×</button>
+  </div>
+  <div class="nb-tabs" role="tablist">
+    <button type="button" data-tab="preface" class="on">序</button>
+    <button type="button" data-tab="read">怎么读这片花田</button>
+    <button type="button" data-tab="method">两种墨水</button>
+    <button type="button" data-tab="bounds">边界</button>
+  </div>
+  <div class="nb-body">
+    <section class="nb-page on" data-page="preface">
+      <p class="eyebrow">Preface · 序</p>
+      <h3>从前，它们封在安装包里；如今被一行一行，重新理解。</h3>
+      <p>永生花的名字，来自把花压成标本、永葆其美的做法。软件承载一个时代的知识和工作方式；通过开源重实现、兼容与保存，它们可以在原有产品之外继续开放。</p>
+      <p>我们收集经典软件的开源重实现、兼容项目与公开技术研究，记录来源、实现方式、体积与成熟度。独立实现相似行为、恢复内部逻辑、取得源代码、绕过授权，分别记录，不能互相推导。</p>
+    </section>
+
+    <section class="nb-page" data-page="read">
+      <p class="eyebrow">How to read · 怎么读</p>
+      <h3>这里不往下翻页。<br>你在时间里散步。</h3>
+      <dl class="howto">
+        <dt>横轴</dt><dd>时间的土壤。每株花种在它对应的原作首次发布的那一年，地下的根写着原作的名字。</dd>
+        <dt>盛开的花</dt><dd>已压制成标本：核查过、写进了标本册。</dd>
+        <dt>花苞</dt><dd>待采集的线索。悬停或点一下，它会打开，但还没核查。</dd>
+        <dt>朱砂虚线</dt><dd>今天，2026 年 10 月。所有重实现都在这一年被我们看见。</dd>
+        <dt>采集地</dt><dd>时间线的尽头。点种子袋，种一株世上还没有的花——它们只是游戏，会留在你的浏览器里。</dd>
+        <dt>小野花</dt><dd>只是装饰，不代表任何项目。</dd>
+      </dl>
+      <p class="fine" style="margin-top:22px">拖动漫游 · 滚轮穿越年份 · Ctrl 或双指缩放 · 双击放大 · <b>[</b> <b>]</b> 在花之间跳 · <b>/</b> 寻花 · <b>0</b> 全景 · Esc 返回</p>
+    </section>
+
+    <section class="nb-page" data-page="method">
+      <p class="eyebrow">Method · 两种墨水</p>
+      <h3>说出来的用铅笔，<br>看见的用墨水。</h3>
+      <p>作者的声明与我们核验到的事实分开书写。字的颜色就是可信程度。</p>
+      <div class="inks">
+        <div class="ink-col ink-claim">
+          <h3>作者声明 · pencil</h3>
+          <ul>
+            <li>基于公开规格与可观察行为，用纯 Rust 独立实现。</li>
+            <li>支持图层、蒙版、调整层与 PSD 读写。</li>
+          </ul>
+        </div>
+        <div class="ink-col ink-seen">
+          <h3>核验所见 · ink</h3>
+          <ul>
+            <li>最新发布为 v0.3.0，三个附件字节数已记录。</li>
+            <li>未安装、编译或运行——这一点同样用墨水写下。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="status-legend">
+        <div><span class="stamp unverified">未核实<small>unverified</small></span><br>仅有公开说法。</div>
+        <div><span class="stamp partial">部分核实<small>partial</small></span><br>部分证据可查。</div>
+        <div><span class="stamp verified">已核实<small>verified</small></span><br>有可信独立证据。</div>
+        <div><span class="stamp retracted">已撤回<small>retracted</small></span><br>撤回或被反驳。</div>
+      </div>
+    </section>
+
+    <section class="nb-page" data-page="bounds">
+      <p class="eyebrow">Boundaries · 边界</p>
+      <h3>这里只有标本，<br>没有种子以外的东西。</h3>
+      <p>本站不存放破解程序、补丁、序列号、密钥、下载链接或绕过授权的操作步骤。只引用公开可访问的原帖、新闻或厂商公告。</p>
+      <p>核查状态只表示检查范围，不为项目的真实性或安全性作担保。"已核实"也不代表授权分发合法。</p>
+      <p class="fine">原作年份为公开常识，用于在时间轴上定位；花的高度与位置只为构图，不编码数据。</p>
+    </section>
+  </div>
+</aside>
+
+<!-- ============ 寻花 ============ -->
+<div class="palette" id="palette" role="dialog" aria-label="寻花">
+  <div class="box">
+    <input id="palInput" type="text" placeholder="寻一株花：名字、原作、年份、花种……" autocomplete="off" spellcheck="false" aria-controls="palList">
+    <ul id="palList" role="listbox"></ul>
+  </div>
+</div>
+
+<!-- ============ 入口：旧窗口融化，代码落地，开出一朵花 ============ -->
+<section class="hero gate" id="gate" aria-label="永生花入口">
   <div class="hero-stage">
     <div class="hero-mast">
       <h1 data-intro>永生花</h1>
@@ -52,7 +158,6 @@
       </defs>
 
       <g id="pWin">
-        <!-- 窗口 -->
         <g id="gWindow" data-intro>
           <g class="w-fill">
             <g filter="url(#winShadow)"><rect class="win-body" x="280" y="60" width="440" height="292"/></g>
@@ -73,7 +178,6 @@
           <path class="win-line w-frame" d="M280 354 V60 H720 V354"/>
         </g>
 
-        <!-- 融化 -->
         <g id="gDrip" data-intro>
           <path fill="url(#dripShade)" d="M302 350 H718 V360 C713 360 708 364 706 372 C704 384 697 386 695 372 C693 364 686 362 664 362 C642 362 632 366 630 392 C628 414 619 414 617 392 C615 368 600 364 560 364 C530 364 513 368 509 380 C506 392 505 420 504 470 L502 516 C501 530 498 530 497 516 L495 470 C494 420 493 392 490 380 C486 368 470 364 430 364 C400 364 392 368 390 388 C388 404 380 404 378 388 C376 368 362 364 334 362 C318 362 310 362 306 372 C304 380 302 380 302 372 Z"/>
           <path d="M520 368 C540 366 560 366 590 368" stroke="#fff" stroke-opacity=".35" stroke-width="1.2" fill="none" stroke-linecap="round"/>
@@ -82,10 +186,7 @@
       </g>
 
       <g id="pMid">
-        <!-- 代码落下 -->
         <g id="rain"></g>
-
-        <!-- 水洼 -->
         <g id="gPool" data-intro>
           <ellipse cx="502" cy="790" rx="58" ry="6" fill="#2b2418" opacity=".08"/>
           <path id="poolBody" fill="#2F7478" d="M452 780 C452 770 474 766 499 767 C526 766 549 770 553 778 C557 786 541 792 521 791 C505 794 482 795 466 791 C451 788 449 784 452 780Z"/>
@@ -95,8 +196,6 @@
           <circle cx="430" cy="780" r="1.4" fill="#2F7478"/>
         </g>
         <g id="dropLayer"></g>
-
-        <!-- 代码作茎 -->
         <g id="gStem" data-intro>
           <path id="stemPath" d="M546 778 C562 718 606 652 638 572" fill="none" stroke="var(--moss)" stroke-width=".6" stroke-opacity=".5"/>
           <text class="stem-code"><textPath id="stemText" href="#stemPath" startOffset="4">impl Bloom for Specimen { fn press(&amp;self) }</textPath></text>
@@ -106,7 +205,6 @@
       <g id="pFlower"><g id="swayFlower"><g id="heroFlower"></g></g></g>
 
       <g id="pFig">
-        <!-- 测量的人 -->
         <g id="fig1" data-intro>
           <g class="figure" transform="translate(426 790)">
             <ellipse cx="0" cy="-25.5" rx="4.6" ry="1.1"/>
@@ -121,7 +219,6 @@
           <path class="dim-line" d="M434 806 l6 -3 M434 806 l6 3 M556 806 l-6 -3 M556 806 l-6 3"/>
           <text class="dim-text" id="dimText" x="495" y="824">11,119,388 B</text>
         </g>
-        <!-- 写标签的人 -->
         <g id="fig2" data-intro>
           <g class="figure" transform="translate(600 790)">
             <ellipse cx="2" cy="-17.8" rx="4.4" ry="1"/>
@@ -144,99 +241,17 @@
 
     <p class="hero-caption" data-intro>fig.1 — 一扇旧窗口从底边融化，落下的不是水，是代码。它在纸上开成一朵虞美人。<span class="hint">在窗口里画几笔，颜色会随下一滴落下；点一下花，起风。</span></p>
   </div>
-  <a class="scroll-cue" href="#preface" aria-label="向下阅读"><span></span></a>
+  <button class="enter" id="enter" type="button">走进花田 <i></i></button>
 </section>
 
-<!-- ============ 序 ============ -->
-<section class="wrap" id="preface">
-  <div class="intro-grid">
-    <p class="statement">从前，它们封在安装包里，<br><span class="soft">一个时代的手艺与习惯，</span><br>如今被一行一行，<br>重新理解。</p>
-    <div class="intro-notes">
-      <p class="eyebrow">序 · Preface</p>
-      <p>永生花的名字，来自把花压成标本、永葆其美的做法。软件承载一个时代的知识和工作方式；通过开源重实现、兼容与保存，它们可以在原有产品之外继续开放。</p>
-      <p>我们收集经典软件的开源重实现、兼容项目与公开技术研究，记录来源、实现方式、体积与成熟度。这里不存放破解程序、补丁、序列号或下载链接。</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 标本册 ============ -->
-<section class="wrap" id="herbarium">
-  <div class="herbarium-head">
-    <div>
-      <p class="eyebrow">Herbarium · 标本册</p>
-      <h2>世界上有这么多花，<br>每一株都不一样。</h2>
-    </div>
-    <div class="herbarium-count">已压制 <b>1</b> 株<br>待采集 9 株 · 悬停可见它们开花的样子<br>采集于 2026-10</div>
-  </div>
-  <div class="grid" id="grid"></div>
-</section>
-
-<!-- ============ 方法：两种墨 ============ -->
-<section class="wrap" id="method">
-  <p class="eyebrow">Method · 两种墨水</p>
-  <h2>说出来的用铅笔，<br>看见的用墨水。</h2>
-  <p class="lede">作者的声明与我们核验到的事实分开书写。字的颜色就是可信程度，不需要读者去猜。</p>
-
-  <div class="inks">
-    <div class="ink-col ink-claim">
-      <h3>作者声明 · pencil</h3>
-      <ul>
-        <li>基于公开规格与可观察行为，用纯 Rust 独立实现。</li>
-        <li>支持图层、蒙版、调整层与 PSD 读写。</li>
-        <li>可通过 CLI / MCP 控制。</li>
-      </ul>
-    </div>
-    <div class="ink-col ink-seen">
-      <h3>核验所见 · ink</h3>
-      <ul>
-        <li>最新发布为 v0.3.0，三个附件字节数已记录。</li>
-        <li>自评表：工具项完成 3、部分 14、缺失 13。</li>
-        <li>未安装、编译或运行——这一点同样用墨水写下。</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="status-legend">
-    <div><span class="stamp unverified">未核实<small>unverified</small></span><br>仅有公开说法，尚未核验。</div>
-    <div><span class="stamp partial">部分核实<small>partial</small></span><br>部分证据可查，无法确认完整。</div>
-    <div><span class="stamp verified">已核实<small>verified</small></span><br>有可信独立证据，仍不代表授权分发合法。</div>
-    <div><span class="stamp retracted">已撤回<small>retracted</small></span><br>作者撤回、原帖删除或事实被反驳。</div>
-  </div>
-</section>
-
-<!-- ============ 采集：世界上有这么多花 ============ -->
-<section class="wrap invite" id="invite">
-  <figure class="generator">
-    <button class="gen-stage" type="button" data-cursor="再开一株" aria-label="再开一株随机的花">
-      <svg id="inviteFlower" viewBox="0 0 200 260" class="flora" aria-hidden="true"></svg>
-    </button>
-    <figcaption class="gen-label">
-      <span class="gen-no" id="genNo">No. ∞–0001</span>
-      <i class="gen-latin" id="genLatin"></i>
-      <span class="gen-zh" id="genZh"></span>
-    </figcaption>
-  </figure>
-  <h2>采一株花来。</h2>
-  <p class="lede">上面这株是刚刚随机长出来的，世界上并没有它。点一下，再开一株。<br>每一个被重新写出的软件，也都值得压成一页标本。</p>
-  <div class="actions">
-    <a class="btn" href="#" id="genNext">再开一株</a>
-    <a class="btn ghost" href="#herbarium">看看待采集的九株</a>
-  </div>
-</section>
-
-</main>
-
-<footer class="site-footer wrap">
-  <span>永生花 · Everbloom — 视觉原型 v0.2 · 2026-10-08</span>
-  <span>只收录公开来源 · 不存放破解程序、补丁、序列号或下载链接</span>
-</footer>
+<noscript><p style="position:fixed;bottom:16px;left:16px;z-index:99">花田需要 JavaScript。可以改看 <a href="read.html">图录</a>。</p></noscript>
 
 <script src="assets/everbloom.js"></script>
 <script>
 (function () {
   const E = window.Everbloom;
 
-  // 窗口里的像素风景
+  // 入口窗口里的像素风景
   const cv = document.createElement('canvas');
   cv.width = 84; cv.height = 50;
   const cx = cv.getContext('2d');
@@ -265,17 +280,12 @@
   document.getElementById('pix').setAttribute('href', cv.toDataURL());
   E.heroCanvas = cv;
 
-  // 工具栏
   const tools = document.getElementById('tools');
-  const glyphs = [
-    'M285 112 h10 v10 h-10z', 'M290 132 m-5 0 a5 4 0 1 0 10 0 a5 4 0 1 0 -10 0',
-    'M285 158 l10 -8', 'M287 172 l6 -6 l3 3 l-6 6z M285 178 l2 -2', 'M290 188 v12 M284 194 h12',
-    'M285 212 h10 M290 207 v10', 'M286 228 l8 0 l-4 -8z'
-  ];
-  glyphs.forEach(d => E.el('path', { d, class: 'win-tool' }, tools));
+  ['M285 112 h10 v10 h-10z', 'M290 132 m-5 0 a5 4 0 1 0 10 0 a5 4 0 1 0 -10 0', 'M285 158 l10 -8',
+   'M287 172 l6 -6 l3 3 l-6 6z M285 178 l2 -2', 'M290 188 v12 M284 194 h12', 'M285 212 h10 M290 207 v10', 'M286 228 l8 0 l-4 -8z']
+    .forEach(d => E.el('path', { d, class: 'win-tool' }, tools));
   E.el('line', { x1: 300, y1: 102, x2: 300, y2: 354, class: 'win-line' }, tools);
 
-  // 代码雨
   const rain = document.getElementById('rain');
   const chars = 'fn bloom(){}→'.split('');
   for (let i = 0; i < 14; i++) {
@@ -283,7 +293,6 @@
     t.textContent = chars[i % chars.length];
   }
 
-  // 主视觉的虞美人
   const svg = document.getElementById('heroArt');
   const hf = document.getElementById('heroFlower');
   hf.setAttribute('filter', `url(#${E.pressFilter(svg, 11)})`);
@@ -292,41 +301,9 @@
   E.drawLeaf(hf, 600, 660, -20, 48, 'lobed', '#6E7F45', true, r);
   const bloom = E.el('g', { transform: 'translate(640 566) scale(1.45) rotate(-12)' }, hf);
   E.drawBloom(bloom, E.SPECIES.poppy, r, true);
-
-  // 标本册
-  const grid = document.getElementById('grid');
-  E.SPECIMENS.forEach(s => {
-    const sp = E.SPECIES[s.species];
-    const pressed = !!s.status;
-    const a = document.createElement('a');
-    a.className = 'card ' + (pressed ? 'pressed' : 'lead');
-    a.href = s.href || s.repo;
-    a.dataset.name = s.name;
-    a.dataset.cursor = pressed ? '翻开标本 →' : '去源头看看 ↗';
-    if (!s.href) { a.target = '_blank'; a.rel = 'noopener'; }
-    a.innerHTML = `
-      <div class="sheet-wrap"${pressed ? ` style="view-transition-name: sheet-${s.no}"` : ''}>
-        <span class="tape"></span>
-        <div class="sheet" data-seed="${s.name}">
-          ${pressed ? '<span class="stamp partial">部分核实</span>' : ''}
-          <svg class="flora" viewBox="0 0 200 260" aria-hidden="true"></svg>
-          <div class="card-label">
-            <div class="no">No. ${s.no}${pressed ? '' : ' · 待采集'}</div>
-            <div class="name">${s.name}</div>
-            <div class="orig">对应 ${s.orig} · ${s.use}</div>
-            <div class="species">${sp.zh} <i>${sp.latin}</i> — ${s.why}</div>
-            ${pressed
-              ? '<div class="species">核查日期 2026-10-07</div>'
-              : '<div class="species">核查日期<span class="blank"></span></div>'}
-          </div>
-        </div>
-      </div>`;
-    grid.appendChild(a);
-    E.drawPlant(a.querySelector('svg'), s.species, { pressed, seed: s.name, radius: 56 });
-    E.deckle(a.querySelector('.sheet'));
-  });
 })();
 </script>
 <script src="assets/motion.js"></script>
+<script src="assets/field.js"></script>
 </body>
 </html>

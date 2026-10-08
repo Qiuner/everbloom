@@ -356,7 +356,7 @@
   let lastPaint = { color: null, t: 0 };
   function drop(color, first) {
     const layer = $('#dropLayer');
-    if (!layer || document.hidden) return;
+    if (!layer || document.hidden || E.heroPaused) return;
     const d = E.el('path', { d: 'M0 -8 C3 -2 5 1 5 4 C5 7 2.5 9 0 9 C-2.5 9 -5 7 -5 4 C-5 1 -3 -2 0 -8Z', fill: color }, layer);
     const fall = d.animate([
       { transform: 'translate(499px,520px) scale(.2,.5)', opacity: 0 },
@@ -417,7 +417,7 @@
     }
     let lastKey = '';
     const loop = () => {
-      if (visible && !reduced) {
+      if (visible && !reduced && !E.heroPaused) {
         cx = lerp(cx, mx, .06); cy = lerp(cy, my, .06);
         const h = hero.offsetHeight || 1;
         scrollP = clamp(window.scrollY / h, 0, 1);
@@ -861,6 +861,9 @@
     if (reduced) return;
     play($('.site-header'), [{ opacity: 0, transform: 'translateY(-12px)' }, { opacity: 1, transform: 'none' }], { duration: 900, delay: 100, easing: ease.out });
   }
+
+  // 供花田等页面复用
+  Object.assign(E, { randomSpecies, bloomIn, hideFlora, scatter });
 
   header();
   hero();

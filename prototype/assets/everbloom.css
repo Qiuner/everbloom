@@ -121,6 +121,13 @@ a { color: inherit; }
 }
 
 .site-nav a { text-decoration: none; }
+.site-nav > * { white-space: nowrap; }
+
+@media (max-width: 560px) {
+  .brand-word { display: none; }
+  .site-nav { gap: 14px; font-size: 13px; }
+  .theme-toggle { padding: 3px 8px; }
+}
 .site-nav a:hover { color: var(--cinnabar); }
 
 .theme-toggle {
@@ -984,9 +991,9 @@ section { padding: clamp(64px, 10vw, 128px) 0; }
   50% { transform: rotate(5deg) scale(1.04); }
 }
 
-.ghost { opacity: 0; filter: blur(5px) saturate(.3); transition: opacity .9s ease, filter .9s ease; }
+g.ghost { opacity: 0; filter: blur(5px) saturate(.3); transition: opacity .9s ease, filter .9s ease; }
 .card.lead svg > .plant.sketch { transition: opacity .9s ease; }
-.card.lead:hover .ghost { opacity: .62; filter: blur(0) saturate(1); }
+.card.lead:hover g.ghost { opacity: .62; filter: blur(0) saturate(1); }
 .card.lead:hover svg > .plant.sketch { opacity: .25; }
 
 /* ---------- 细节交互 ---------- */
