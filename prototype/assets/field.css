@@ -475,6 +475,8 @@ body[data-zoom="near"] .flabel:not(.focus) .more { display: none; }
   transform-origin: 64% 62%;
 }
 .hero.gate.gone { visibility: hidden; pointer-events: none; }
+/* 纵向 flex 里 margin:auto 会让内容收缩成内容宽度，这里撑满 */
+.gate .hero-stage { width: 100%; }
 .gate .enter {
   position: absolute;
   left: 50%;

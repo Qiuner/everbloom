@@ -910,7 +910,7 @@ section { padding: clamp(64px, 10vw, 128px) 0; }
    ===================================================================== */
 
 /* 开场前先藏起来；脚本失败时 9 秒后自动显示 */
-.motion [data-intro] { opacity: 0; animation: failsafe .01s 9s forwards; }
+.motion [data-intro], .motion #heroFlower { opacity: 0; animation: failsafe .01s 9s forwards; }
 @keyframes failsafe { to { opacity: 1; } }
 
 .petal, .leaf-in, .core, .sc-petal { transform-box: view-box; transform-origin: 0 0; }

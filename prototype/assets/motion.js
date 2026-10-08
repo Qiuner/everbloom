@@ -313,6 +313,7 @@
     // 开花
     const hf = $('#heroFlower');
     hideFlora(hf);
+    hf.style.opacity = '1';
     setTimeout(() => { if (!skipping) bloomIn(hf, { speed: .9 }); }, 5700 * S);
 
     // 两个小人与尺寸
